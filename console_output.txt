@@ -1,0 +1,12 @@
+Enter two polynomials:
+
+Enter the number of terms: 2
+term1 = 2
+term2 = 3.5
+
+Enter the number of terms: 3
+term1 = 2.11
+term2 = -3
+term3 = 4.5
+
+The product: 4.22, -6, 9, 7.385, -10.5, 15.75
