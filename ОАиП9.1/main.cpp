@@ -10,10 +10,17 @@ void PrintPolynomyal(const std::vector<float> polynomial)
 
 	if (polynomial.size() > 0)
 	{
-		std::cout << std::setprecision(FLOAT_PRECISION) << polynomial[0];
+		if (polynomial[0] != 0)
+		{
+			std::cout << std::setprecision(FLOAT_PRECISION) << polynomial[0] << "x^" << polynomial.size();
+		}
+		
 		for (int i = 1; i < polynomial.size(); ++i)
 		{
-			std::cout << ", " << std::setprecision(FLOAT_PRECISION) << polynomial[i];
+			if (polynomial[i] != 0)
+			{
+				std::cout << " + " << std::setprecision(FLOAT_PRECISION) << polynomial[i] << "x^" << polynomial.size() - i;
+			}
 		}
 	}	
 }
