@@ -1,12 +1,15 @@
 Enter two polynomials:
 
-Enter the number of terms: 2
-term1 = 2
-term2 = 3.5
+Enter the max power of x: 4
+coefficient of x^4 = 4
+coefficient of x^3 = 2
+coefficient of x^2 = 3
+coefficient of x^1 = 5
+coefficient of x^0 = 2
 
-Enter the number of terms: 3
-term1 = 2.11
-term2 = -3
-term3 = 4.5
+Enter the max power of x: 2
+coefficient of x^2 = 2
+coefficient of x^1 = 1
+coefficient of x^0 = 1
 
-The product: 4.22, -6, 9, 7.385, -10.5, 15.75
+The product: 8x^6 + 8x^5 + 12x^4 + 15x^3 + 12x^2 + 7x + 2

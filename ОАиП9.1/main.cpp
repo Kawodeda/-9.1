@@ -4,37 +4,61 @@
 #include <vector>
 #include <stdexcept>
 
-void PrintPolynomyal(const std::vector<float> polynomial)
+void PrintTerm(const float term, const int power)
 {
 	const std::streamsize FLOAT_PRECISION = 4;
 
-	if (polynomial.size() > 0)
+	if (term == 0)
 	{
-		if (polynomial[0] != 0)
+		return;
+	}
+
+	std::cout << std::setprecision(FLOAT_PRECISION) << term;
+
+	if (power == 1)
+	{
+		std::cout << "x";
+		return;
+	}
+	if (power == 0)
+	{
+		return;
+	}
+
+	std::cout << "x^" << power;
+	return;
+}
+
+void PrintPolynomyal(const std::vector<float>& polynomial)
+{
+	size_t size = polynomial.size();
+	if (size > 0)
+	{		
+		for (size_t i = 0; i < size - 1; ++i)
 		{
-			std::cout << std::setprecision(FLOAT_PRECISION) << polynomial[0] << "x^" << polynomial.size();
-		}
-		
-		for (int i = 1; i < polynomial.size(); ++i)
-		{
-			if (polynomial[i] != 0)
+			PrintTerm(polynomial[i], size - i - 1);
+			if (polynomial[i + 1] != 0)
 			{
-				std::cout << " + " << std::setprecision(FLOAT_PRECISION) << polynomial[i] << "x^" << polynomial.size() - i;
-			}
+				std::cout << " + ";
+			}			
 		}
+		PrintTerm(polynomial[size - 1], 0);
+		std::cout << std::endl;
 	}	
 }
 
 std::vector<float> ScanPolynomial()
 {
-	std::cout << std::endl << "Enter the number of terms: ";
-	size_t size = 0;
-	std::cin >> size;
+	std::cout << std::endl << "Enter the max power of x: ";
+	int maxPower = 0;
+	std::cin >> maxPower;
+
+	size_t size = maxPower + 1;
 
 	std::vector<float> result(size);
-	for (int i = 0; i < size; ++i)
+	for (size_t i = 0; i < size; ++i)
 	{
-		std::cout << "term" << (i + 1) << " = ";
+		std::cout << "coefficient of x^" << (size - i - 1) << " = ";
 		std::cin >> result[i];
 	}
 
@@ -44,14 +68,21 @@ std::vector<float> ScanPolynomial()
 std::vector<float> MultiplyPolynomials
 (const std::vector<float>& a, const std::vector<float>& b)
 {
-	size_t resultSize = a.size() * b.size();
+	int aSize = a.size();
+	int bSize = b.size();
+	int resultSize = aSize + bSize - 1;
 	std::vector<float> result(resultSize);
 
-	for (int i = 0; i < a.size(); ++i)
+	for (int n = 0; n < resultSize; ++n)
 	{
-		for (int j = 0; j < b.size(); ++j)
+		int minI = std::max<int>(aSize + n - resultSize, 0);
+		int maxI = std::min<int>(bSize + aSize + n - resultSize - 1, aSize - 1);
+		
+		int j = std::min<int>(maxI, bSize - 1);
+		for (int i = minI; i <= maxI; ++i)
 		{
-			result[i * b.size() + j] = a[i] * b[j];
+			result[n] += a[i] * b[j];
+			--j;
 		}
 	}
 
@@ -66,7 +97,9 @@ int main()
 		std::vector<float> a = ScanPolynomial();
 		std::vector<float> b = ScanPolynomial();
 		std::cout << std::endl << "The product: ";
-		PrintPolynomyal(MultiplyPolynomials(a, b));
+
+		std::vector<float> result = MultiplyPolynomials(a, b);
+		PrintPolynomyal(result);
 	}
 	catch (std::exception& e)
 	{
